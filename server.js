@@ -2,6 +2,7 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const PORT = process.env.PORT || 3000;
 
 let todoList = [{
     todo: "learn NodeJs",
@@ -20,7 +21,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.use(cors);
+app.use(cors());
 
 app.get("/", (req,res) => {
   res.send(
@@ -84,4 +85,4 @@ app.delete("/todo/:id", (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Example app listening on port 3000!"));
+app.listen(PORT, () => console.log(`Example app listening on port ${3000}`));
