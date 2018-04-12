@@ -59,8 +59,8 @@ const deleteData = () => {
 };
 
 getAll();
-// getOne();
-// createNew();
-// createNew();
-// deleteData();
-// getAll();
+getOne();
+createNew();
+createNew();
+deleteData();
+getAll();

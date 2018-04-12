@@ -48,7 +48,7 @@ app.post("/todo", (req, res) => {
   let done = JSON.parse(req.body.done);
 
   if (todo === "") {
-    res.send("todo cannot be empty");
+    res.send("todo can't be empty");
   } else {
     let newTodo = {
       todo: todo,
