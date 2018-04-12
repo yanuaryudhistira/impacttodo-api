@@ -1,13 +1,13 @@
 {
-  "name": "express-js http",
+  "name": "impacttodo-api",
   "version": "1.0.0",
   "description": "\"http using express\"",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server"
   },
-  "author": "",
+  "author": "Yanuar Yudhistira",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
