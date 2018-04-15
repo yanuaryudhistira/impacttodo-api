@@ -1,22 +1,44 @@
-const axios = require("axios");
-const API_url = "http://localhost:3000"
+// const axios = require("axios");
+let API_url = "http://localhost:3000"
+let container = document.getElementById("container");
 
-//get ALL
-const getAll = () => {
+//Create
+function create(todo, status = pending) {
   return axios
-    .get(`${API_url}/todo`)
-    .then(rawResponse => {
+    .post(`${API_url}/todo`, {
+      todo: todo,
+      status: status
+    })
+    .then(function(rawResponse) {
       console.log("-------------------------------------------");
-      console.log("get All");
+      console.log("create new todo");
       console.log(rawResponse.data);
+      getAll();
     })
     .catch(function(error) {
       console.log(error);
     });
 };
 
-//get One
-const getOne = () => {
+//get all
+function getAll() {
+  return axios
+    .get(`${API_url}/todo`)
+    .then(rawResponse => {
+      let result = "";
+      let datas = rawResponse.data;
+      for (var i = 0; i < datas.length; i++) {
+        result += `<div class="list-todo">${data.todo}</div>`;
+      }
+      container.innerHTML = result;
+    });
+    .catch(function(error) {
+      console.log(error);
+    });
+};
+
+//get one
+function getOne() {
   return axios
     .get(`${API_url}/todo/1`)
     .then(rawResponse => {
@@ -29,24 +51,7 @@ const getOne = () => {
     });
 };
 
-//Create new todo
-const createNew = () => {
-  return axios
-    .post(`${API_url}/todo`, {
-      todo: "New Todo",
-      done: false
-    })
-    .then(function(rawResponse) {
-      console.log("-------------------------------------------");
-      console.log("Create new todo");
-      console.log(rawResponse.data);
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-};
-
-const deleteData = () => {
+function delete() => {
   return axios
   .delete(`${API_url}/todo/0`)
   .then(rawResponse => {
@@ -58,9 +63,4 @@ const deleteData = () => {
   });
 };
 
-getAll();
-getOne();
-createNew();
-createNew();
-deleteData();
 getAll();

@@ -4,24 +4,39 @@ const app = express();
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3000;
 
-let todoList = [{
-    todo: "learn NodeJs",
-    done: false
-  },
-  {
-    todo: "Learn ReactJs",
-    done: false
-  }
-];
-
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 
+let todoList = [{
+    todo: "join impactbyte coding bootcamp",
+  },
+  {
+    todo: "become a fullstack web developer",
+  }
+];
+
+app.get("/todo/search", (req,res) => {
+  let keyword = req.query.todo
+  let result = todoList.filter(todo => {
+    return todo.todo.toLowerCase().includes(keyword.toLowerCase())
+  })
+  res.send(result)
+})
+
+app.post("/todo", (req, res) => {
+  let todo = req.body.todo;
+  let newTodo = {
+      todo: todo,
+  };
+  todoList.push(newTodo);
+  res.send({
+      data: newTodo
+  });
+});
+
 app.get("/", (req,res) => {
-  res.send(
-    "welcome to my server"
-  );
+  res.send("Impacttodo Server!");
 });
 
 app.get("/todo", (req, res) => {
@@ -31,53 +46,23 @@ app.get("/todo", (req, res) => {
 });
 
 app.get("/todo/:id", (req, res) => {
-  let length = todoList.length;
-  let index = req.params.id;
-
-  if (index > length - 1) {
-    res.send("not found");
-  } else {
-    res.send({
-      data: todoList[index]
-    });
-  }
+  res.send({
+    data: todoList[index]
+  });
 });
 
-app.post("/todo", (req, res) => {
-  let todo = req.body.todo;
-  let done = JSON.parse(req.body.done);
-
-  if (todo === "") {
-    res.send("todo can't be empty");
-  } else {
-    let newTodo = {
-      todo: todo,
-      done: done
-    };
-    todoList.push(newTodo);
-    res.send({
-      sucess: true,
-      data: newTodo
-    });
-  }
+app.put('/todo/:id', (req,res) => {
+  todoList[req.params.id] = req.body
+  res.send({
+    data: todoList
+  });
 });
 
 app.delete("/todo/:id", (req, res) => {
-  let length = todoList.length;
-  let index = req.params.id;
-
-  if (index > length - 1) {
-    res.send({
-      sucess: false,
-      message: "data not found"
-    });
-  } else {
-    todoList.splice(index, 1);
-    res.send({
-      success: true,
-      data: todoList
-    });
-  }
+  todoList.splice(req.params.id, 1);
+  res.send({
+    data: todoList
+  });
 });
 
-app.listen(PORT, () => console.log(`Example app listening on port ${3000}`));
+app.listen(PORT, () => console.log(`impacttodo listening on port ${3000}`));
