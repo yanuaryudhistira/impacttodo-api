@@ -1,17 +1,16 @@
 // const axios = require("axios");
-let API_url = "http://localhost:3000"
+let API_url = "http://localhost:3000";
 let container = document.getElementById("container");
 
-//Create
-function create(todo, status = pending) {
+//-----------------------------------------------------------------------------
+
+function create(todo, status = "success") {
   return axios
     .post(`${API_url}/todo`, {
       todo: todo,
       status: status
     })
     .then(function(rawResponse) {
-      console.log("-------------------------------------------");
-      console.log("create new todo");
       console.log(rawResponse.data);
       getAll();
     })
@@ -20,7 +19,8 @@ function create(todo, status = pending) {
     });
 };
 
-//get all
+//-----------------------------------------------------------------------------
+
 function getAll() {
   return axios
     .get(`${API_url}/todo`)
@@ -31,19 +31,16 @@ function getAll() {
         result += `<div class="list-todo">${data.todo}</div>`;
       }
       container.innerHTML = result;
-    });
+    })
     .catch(function(error) {
       console.log(error);
     });
 };
 
-//get one
 function getOne() {
   return axios
     .get(`${API_url}/todo/1`)
     .then(rawResponse => {
-      console.log("-------------------------------------------");
-      console.log("get One");
       console.log(rawResponse.data);
     })
     .catch(function(error) {
@@ -51,16 +48,19 @@ function getOne() {
     });
 };
 
-function delete() => {
+//-----------------------------------------------------------------------------
+
+function deleteOne() {
   return axios
   .delete(`${API_url}/todo/0`)
   .then(rawResponse => {
-    console.log("Delete data");
     console.log(rawResponse.data);
   })
-  .catch(error => {
+  .catch(function(error) {
     console.log(error);
   });
 };
+
+//-----------------------------------------------------------------------------
 
 getAll();
